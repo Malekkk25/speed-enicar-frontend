@@ -1,59 +1,103 @@
-# SpeedEnicarFront
+# SpeedENICar: Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Angular web app for **SpeedENICar**, a student support platform for ENICarthage. It connects students, psychologists and the scolarity (academic affairs) office in one place: appointment booking, video consultations, mood and journal tracking, absences, documents and risk alerts.
 
-## Development server
+> Backend repository: [speed-enicar-backend](https://github.com/Malekkk25/speed-enicar-backend) (Spring Boot REST API + WebSocket)
 
-To start a local development server, run:
+## Features
+
+Access is role-based (`STUDENT`, `PSYCHOLOGIST`, `SCOLARITY`), enforced with route guards and a JWT interceptor.
+
+### Student
+- Dashboard, academic overview and absences
+- Book and follow psychologist appointments
+- Mood tracker and personal journal
+- Report academic difficulties
+- Upload and track documents
+
+### Psychologist
+- Dashboard with today's and pending appointments
+- Appointment list and detail
+- Student overview and history
+- Confidential records (create, edit, view)
+- Student alerts with detail view
+- Schedule / availability management
+- Documents
+
+### Scolarity
+- Student management
+- Absence tracking (prolonged absences, justification)
+- At-risk student analysis
+- Document review
+
+### Shared
+- **Video consultations**: WebRTC calls between student and psychologist, with signaling over WebSocket (STOMP/SockJS)
+- **Real-time notifications** with a notification bell
+- JWT authentication with route guards by role
+
+## Tech stack
+
+- Angular 17 (standalone components, lazy-loaded feature routes)
+- Angular Material and CDK
+- RxJS
+- STOMP (`@stomp/stompjs`) and SockJS for WebSocket messaging
+- WebRTC for video calls
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 18+ and npm
+- The [backend](https://github.com/Malekkk25/speed-enicar-backend) running (default `http://localhost:8088`)
+
+### Install and run
 
 ```bash
-ng serve
+git clone https://github.com/Malekkk25/speed-enicar-frontend.git
+cd speed-enicar-frontend
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open <http://localhost:4200>.
 
-## Code scaffolding
+### Configuration
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+API and WebSocket URLs are set in `src/enviroments/`:
+
+```ts
+// environment.ts (development)
+apiUrl: 'http://localhost:8088/api',
+wsUrl: 'http://localhost:8088/ws',
+```
+
+Update `environment.prod.ts` with your production URLs before building.
+
+### Build
 
 ```bash
-ng generate component component-name
+npm run build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Project structure
 
-```bash
-ng generate --help
+```
+src/app/
+├── core/
+│   ├── guards/          # authGuard, roleGuard
+│   ├── interceptors/    # JWT interceptor
+│   ├── models/          # shared TypeScript interfaces
+│   └── services/        # auth, student, psychologist, consultation,
+│                        # notification, documents, WebRTC signaling
+└── features/
+    ├── auth/            # login
+    ├── student/         # student space
+    ├── psychologist/    # psychologist space
+    ├── scolarity/       # academic affairs space
+    ├── Consultation/    # video call, notification bell
+    └── dashboard/
 ```
 
-## Building
+## Author
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Malek** ([@Malekkk25](https://github.com/Malekkk25))
