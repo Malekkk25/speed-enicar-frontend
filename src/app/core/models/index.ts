@@ -89,6 +89,7 @@ export interface Appointment extends BaseEntity{
     duration:number;
     status:AppointmentStatus;
     type:AppointmentType;
+    locationType?: 'ONLINE' | 'PRESENTIAL';
     reason:string;
     notes?:string;
 }
@@ -100,6 +101,7 @@ export interface AppointmentRequest{
     datetime:string;
     duration :number;
     type:AppointmentType;
+    locationType?: 'ONLINE' | 'PRESENTIAL';
     reason:string;
 }
 

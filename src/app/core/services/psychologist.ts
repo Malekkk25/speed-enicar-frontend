@@ -76,6 +76,7 @@ export interface Appointment {
   duration: number;
   status: 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
   type: 'INITIAL' | 'FOLLOW_UP' | 'URGENT';
+  locationType?: 'ONLINE' | 'PRESENTIAL';
   reason?: string;
   notes?: string;
   cancellationReason?: string;
